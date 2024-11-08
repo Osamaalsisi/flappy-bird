@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://bc7selckl0dd1"]
+
+[ext_resource type="Script" path="res://Main.cs" id="1_71cp8"]
+[ext_resource type="PackedScene" uid="uid://bq6ob6bx38qlb" path="res://Bird.tscn" id="2_ck5fl"]
+[ext_resource type="PackedScene" uid="uid://do0e63tljgn6s" path="res://Pipes.tscn" id="2_ia4dj"]
+[ext_resource type="Texture2D" uid="uid://bmafpjf5sm38n" path="res://Background.jpg" id="3_2cwtm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a0ut3"]
+size = Vector2(1072, 32)
+
+[node name="Main" type="Node2D"]
+position = Vector2(0, -2)
+script = ExtResource("1_71cp8")
+pipescene = ExtResource("2_ia4dj")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -32.0
+offset_top = 1.0
+offset_right = 906.0
+offset_bottom = 676.0
+texture = ExtResource("3_2cwtm")
+expand_mode = 1
+
+[node name="Bird" parent="." instance=ExtResource("2_ck5fl")]
+position = Vector2(389, 284)
+
+[node name="PipeSpawner" type="Marker2D" parent="."]
+position = Vector2(908, 207)
+
+[node name="Timer" type="Timer" parent="PipeSpawner"]
+wait_time = 1.6
+autostart = true
+
+[node name="ScoreLabel" type="Label" parent="."]
+top_level = true
+offset_left = 337.0
+offset_top = 25.0
+offset_right = 561.0
+offset_bottom = 133.0
+theme_override_colors/font_color = Color(0.298044, 0.641108, 0.573151, 1)
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+
+[node name="DeadEnd" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadEnd"]
+position = Vector2(423, 687)
+shape = SubResource("RectangleShape2D_a0ut3")
+one_way_collision = true
+
+[connection signal="timeout" from="PipeSpawner/Timer" to="." method="OnPipeSpawnerTimeout"]

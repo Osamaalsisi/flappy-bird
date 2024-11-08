@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq6ob6bx38qlb"]
+
+[ext_resource type="Texture2D" uid="uid://b0xm8iy58n5xt" path="res://Bird1.png" id="1_ach37"]
+[ext_resource type="Script" path="res://Bird.cs" id="1_wte0u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wno16"]
+radius = 26.0192
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6qjmq"]
+radius = 27.074
+
+[node name="Bird" type="CharacterBody2D"]
+script = ExtResource("1_wte0u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, -3)
+scale = Vector2(0.0888335, 0.084722)
+texture = ExtResource("1_ach37")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, -3)
+shape = SubResource("CircleShape2D_wno16")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(3, -3)
+shape = SubResource("CircleShape2D_6qjmq")
+
+[connection signal="area_shape_entered" from="Area2D" to="." method="OnBirdCollied"]
